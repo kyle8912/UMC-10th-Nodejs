@@ -12,7 +12,7 @@ export class MissionController extends Controller {
         @Body() missionData: any
     ): Promise<any> {
         console.log("==가게 미션 추가 요청==");
-        console.log("요청 바디 :", missionData);
+        console.log("요청 내용:", missionData);
 
         const newMissionId = await addMissionService(storeId, missionData);
 
