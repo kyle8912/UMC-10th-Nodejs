@@ -5,3 +5,16 @@ export interface addMissionReqeust{
     points: number;
     deadline: Date;
 }
+
+export interface ApiResponse{
+    resultType: string;
+    data:{
+        
+    };
+}
+
+//회원가입실패
+export interface ApiErrorResponse{
+    errorCode: string;
+    reason: string;
+}

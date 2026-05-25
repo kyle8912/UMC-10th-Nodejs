@@ -1,8 +1,12 @@
 //1-1. 특정 지역에 가게 추가하기
 export interface addStoreRequest{
+  /** @example "가게1" */
   name: string; //가게명
+  /** @example "한양대학로55" */
   address: string; //가게주소
+  /** @example "101-1호" */
   addressDetail : string; //가게상세주소
+  /** @example "051-123-4567" */
   phoneNum : string; //가게전화번호
 }
 
@@ -30,15 +34,27 @@ export interface ReviewItem {
     date: Date;
 }
 
- export const responseFromReviews = (
-    reviews: ReviewItem[]
-  ): ReviewListResponse => {
-    const lastReview = reviews[reviews.length - 1];
+export const responseFromReviews = (
+  reviews: ReviewItem[]
+): ReviewListResponse => {
+  const lastReview = reviews[reviews.length - 1];
   
-    return {
-      data: reviews,
-      pagination: {
-        cursor: lastReview ? lastReview.id : null,
-      },
-    };
+  return {
+    data: reviews,
+    pagination: {
+      cursor: lastReview ? lastReview.id : null,
+    },
   };
+};
+
+export interface ApiErrorResponse{
+  errorCode: string;
+  reason: string;
+}
+
+export interface ApiSuccessResponse{
+  resultType: string;
+  data:{
+    storeId: number;
+  }
+}

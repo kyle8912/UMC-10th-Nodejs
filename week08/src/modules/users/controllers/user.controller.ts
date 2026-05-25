@@ -10,28 +10,34 @@ import {
     Tags,
     Path,
     Query,
+    Response as TsoaResponse
 } from "tsoa";
 import { UserSignUpRequest, UserSignUpResponse} from "../dtos/user.dto";
 import { userSignUp } from "../services/user.service";
 import { authorizeUser } from "../../../common/middlewares/auth.middleware";
-import { Request as ExpressRequest } from "express";
+import { Request as ExpressRequest, Response as ExpressResponse } from "express";
 import { StatusCodes } from "http-status-codes";
 import { listUserReviewsService } from "../services/user.service";
 import { ApiResponse } from "../../../common/response/response";
 import { success} from "../../../common/response/response";
 
 
+
 @Route("users") //라우트경로
 @Tags("유저") //swagger태그
 export class UserController extends Controller{
-    @Post("signup") //엔드포인트 정의
+    /**
+     * 회원가입 api
+     * @summary 회원가입을 처리하는 엔드포인트
+     */
+    @Post("signup")
+    @TsoaResponse<ApiResponse<UserSignUpResponse>>(200,"회원가입성공")
+    @TsoaResponse<ApiResponse<null>>(400, "중복된 이메일 에러") //
     public async handleUserSignUp(
-        @Body() body: UserSignUpRequest,
-    ): Promise<ApiResponse<UserSignUpResponse>> {
-        console.log("회원가입 요청");
-        console.log("body:", body);
-        const user = await userSignUp(body); //서비스로직;
-        return success(user); //성공 응답 보내기
+        @Body() body: UserSignUpRequest
+    ) : Promise<ApiResponse<UserSignUpResponse>> {
+        const user = await userSignUp(body);
+        return success(user);
     }
     @Get("guest")
     public async handleGuestPage(): Promise<String> {
