@@ -1,4 +1,4 @@
-import { UserSignUpRequest, UserSignUpResponse } from "../dtos/user.dto"; //인터페이스 가져오기
+import { UpdateProfileRequest, UserSignUpRequest, UserSignUpResponse } from "../dtos/user.dto"; //인터페이스 가져오기
 import {
   addUser,
   getUser,
@@ -10,6 +10,7 @@ import { AppError} from "../../../common/errors/app.error";
 import { getUserById } from "../repositories/user.repository";
 import { getReviewsByUserId } from "../repositories/user.repository";
 import { DuplicateUserEmailError } from "../../../common/errors/error";
+import { prisma } from "../../../db.config"
 
 export const userSignUp = async (data: UserSignUpRequest) : Promise<UserSignUpResponse> => {
   const joinUserId = await addUser({
@@ -54,4 +55,16 @@ export const listUserReviewsService = async(userId: number, cursor?:number) => {
     }
   const reviews = await getReviewsByUserId(userId, cursor);
   return reviews;
+}
+
+export const updateProfileService = async (userId: number, data:UpdateProfileRequest) => {
+  return await prisma.user.update({
+    where: {id: userId},
+    data:{
+      phoneNum: data.phoneNum,
+      birth: data.birth,
+      address: data.address,
+      detailAddress: data.detailAddress
+    }
+  })
 }

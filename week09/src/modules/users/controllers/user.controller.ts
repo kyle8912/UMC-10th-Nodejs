@@ -10,9 +10,12 @@ import {
     Tags,
     Path,
     Query,
-    Response as TsoaResponse
+    Response as TsoaResponse,
+    Patch,
+    Security,
+    SuccessResponse
 } from "tsoa";
-import { UserSignUpRequest, UserSignUpResponse} from "../dtos/user.dto";
+import { UpdateProfileRequest, UpdateProfileResponse, UserSignUpRequest, UserSignUpResponse} from "../dtos/user.dto";
 import { userSignUp } from "../services/user.service";
 import { authorizeUser } from "../../../common/middlewares/auth.middleware";
 import { Request as ExpressRequest, Response as ExpressResponse } from "express";
@@ -83,5 +86,18 @@ export class UserController extends Controller{
         console.log("요청 유저 번호:", userId);
         const reviews = await listUserReviewsService(userId, cursor);
         return success(reviews);
+    }
+    @Security("jwt")
+    @Patch("profile")
+    @SuccessResponse("200", "프로필수정완료")
+    public async updateProfile(
+        @Request() req: any,
+        @Body() profileData: UpdateProfileRequest
+    ): Promise<UpdateProfileResponse>{
+        const userId = req.user.id;
+        return {
+            resultType: "SUCCESS",
+            data: {message: "데이터수정완료"}
+        };
     }
 }

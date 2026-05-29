@@ -1,7 +1,7 @@
 import { getStoreById } from "../../stores/repositories/store.repository";
 import { addMissionRqpository } from "../repositories/mission.repository";
 import { getMissionsByStoreId } from "../repositories/mission.repository";
-export const addMissionService = async(storeId: number, data: any) => {
+export const addMissionService = async(userId: number, storeId: number, data: any) => {
     const insertId = await addMissionRqpository(storeId, data);
     return insertId;
 }

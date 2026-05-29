@@ -34,3 +34,14 @@ export interface ErrorResponse{
     reason: string;
 }
 
+//유저정보수정
+export interface UpdateProfileRequest{
+    phoneNum?: string;
+    birth?: string;
+    address? : string;
+    detailAddress?: string;
+}
+export interface UpdateProfileResponse {
+    resultType: string;
+    data: { message: string };
+}

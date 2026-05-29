@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Path, Post, Query, Route, Tags, Response, SuccessResponse } from "tsoa";
+import { Body, Controller, Get, Path, Post, Query, Route, Tags, Response, SuccessResponse, Request, Security } from "tsoa";
 import { addMissionService, handleListStoreMissionsService } from "../services/mission.service";
 import { MissionResponse, addMissionReqeust } from "../dtos/mission.dto";
 import { ApiSuccessResponse, ApiErrorResponse } from "../../stores/dtos/store.dto";
@@ -9,18 +9,20 @@ import { ApiResponse } from "../../../common/response/response";
 export class MissionController extends Controller {
 
     // 가게 미션 추가
+    @Security("jwt")
     @Post("stores/{storeId}")
     @SuccessResponse("200", "미션 추가 완료")
     @Response<ApiErrorResponse>("400", "미션추가실패: 필수값누락")
     @Response<ApiErrorResponse>("404", "미션추가실패: 존재하지않는가게")
     public async addMission(
         @Path() storeId: number,
+        @Request() req: any,
         @Body() missionData: addMissionReqeust
     ): Promise<ApiResponse<any>> {
         console.log("==가게 미션 추가 요청==");
         console.log("요청 내용:", missionData);
-
-        const newMissionId = await addMissionService(storeId, missionData);
+        const userId = req.user.id;
+        const newMissionId = await addMissionService(userId, storeId, missionData);
 
         return {
             resultType: "SUCCESS",

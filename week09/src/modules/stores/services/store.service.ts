@@ -5,13 +5,13 @@ import { getAllStoreReviews } from "../repositories/store.repository";
 import { ReviewListResponse, responseFromReviews, ReviewItem} from '../dtos/store.dto';
 import { AppError} from "../../../common/errors/app.error";
 
-export const addStoreService = async (regionId: number, data: any) => {
+export const addStoreService = async (userId: number, regionId: number, data: any) => {
     const insertId = await addStoreRepository(regionId, data);
     return insertId;
 };
 
 
-export const addReviewService = async(storeId: number, data: any) => {
+export const addReviewService = async(userId: number, storeId: number, data: any) => {
     const store = await getStoreById(storeId);
     if (!store) {
         throw new AppError({
