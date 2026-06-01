@@ -39,7 +39,7 @@ const googleVerify = async (profile: Profile) => {
         birth: new Date(1970, 0, 1),
         address: "추후 수정",
         detailAddress: "추후 수정",
-        phoneNumber: "추후 수정",
+        phoneNum: "추후 수정",
       },
     });
   }
