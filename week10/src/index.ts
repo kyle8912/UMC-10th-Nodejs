@@ -10,12 +10,8 @@ import { prisma } from "./db.config.js";
 
 // 1. 환경 변수 설정
 dotenv.config();
-passport.use(googleStrategy);
 
 import { googleStrategy, jwtStrategy } from "./auth.config.js";
-
-passport.use(googleStrategy);
-passport.use(jwtStrategy); 
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -92,3 +88,6 @@ app.get("/oauth2/callback/google",
     res.status(200).json({ success: true, tokens: req.user });
   }
 );
+
+passport.use(googleStrategy);
+passport.use(jwtStrategy); 
