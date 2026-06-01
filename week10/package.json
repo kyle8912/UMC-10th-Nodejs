@@ -12,6 +12,7 @@
     "dev": "tsoa spec-and-routes && nodemon --exec tsx src/index.ts"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "@prisma/adapter-mariadb": "^7.8.0",
     "cookie-parse": "^0.4.0",
     "cookie-parser": "^1.4.7",
@@ -30,7 +31,6 @@
     "tsoa": "^7.0.0-alpha.0"
   },
   "devDependencies": {
-    "@prisma/client": "^6.19.3",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/jsonwebtoken": "^9.0.10",
