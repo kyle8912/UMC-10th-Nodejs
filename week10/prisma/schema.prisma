@@ -15,7 +15,7 @@ model User {
   birth         DateTime @db.Date
   address       String   @db.VarChar(255)
   detailAddress String?  @map("detail_address") @db.VarChar(255)
-  phoneNumber   String   @map("phone_number") @db.VarChar(15)
+  phoneNum   String   @map("phone_number") @db.VarChar(15)
 
   userFavorCategories UserFavorCategory[]
   reviews             UserStoreReview[]
